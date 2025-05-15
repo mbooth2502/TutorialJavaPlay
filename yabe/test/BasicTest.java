@@ -5,6 +5,13 @@ import models.*;
 
 public class BasicTest extends UnitTest {
 
+    // Method to clear database before each test script
+    @Before
+    public void setup() {
+        Fixtures.deleteAll();
+    }
+    
+
     @Test
     public void createAndRetrieveUser() {
         // Create a new user and save it
