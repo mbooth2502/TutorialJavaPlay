@@ -18,5 +18,10 @@ public class User extends Model {
         this.password = password;
         this.fullname = fullname;
     }
+    
  
+    // Check if a user with sepecified username/password exists
+    public static User connect(String email, String password) {
+        return find("byEmailAndPassword", email, password).first();
+    }
 }
