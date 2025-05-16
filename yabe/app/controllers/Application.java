@@ -7,6 +7,7 @@ import play.mvc.*;
 import play.Play;
 import play.data.validation.*;
 import play.libs.*; 
+import play.cache.*;
 
 import models.*;
  
@@ -51,8 +52,12 @@ public class Application extends Controller {
 
 
     // Captcha Image production
-    public static void captcha() {
+    // secret key stored in cache
+    // to retrieve code later, need to generate a unique ID - added to each form as a hidden field
+    public static void captcha(String id) {
         Images.Captcha captcha = Images.captcha();
+        String code = captcha.getText("#3FA7D6");
+        Cache.set(id, code, "10mn");
         renderBinary(captcha);
     }
  

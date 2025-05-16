@@ -2,6 +2,7 @@
 # This file defines all application routes (Higher priority routes first)
 # http://localhost:9000/
 # http://localhost:9000/@tests
+# http://localhost:9000/captcha
 # ~~~~
 
 # Home page
