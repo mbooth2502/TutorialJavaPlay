@@ -39,4 +39,13 @@ public class Post extends Model {
         return this;
     }
     
+
+    // Adding Pagination - easy navigation through posts
+    public Post previous() {
+        return Post.find("postedAt < ?1 order by postedAt desc", postedAt).first();
+    }
+    
+    public Post next() {
+        return Post.find("postedAt < ?1 order by postedAt desc", postedAt).first();
+    }
 }

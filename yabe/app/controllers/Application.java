@@ -23,5 +23,13 @@ public class Application extends Controller {
         ).from(1).fetch(10);
         render(frontPost, olderPosts);
     }
+
+
+    // Method to display pos details page
+    // id to be extracted from from query string, from URL path, or from request body 
+    public static void show(Long id) {
+        Post post = Post.findById(id);
+        render(post);
+    }
  
 }

@@ -1,9 +1,14 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
+# http://localhost:9000/
+# http://localhost:9000/@tests
 # ~~~~
 
 # Home page
 GET     /                                       Application.index
+
+# Display page
+GET     /posts/{id}                             Application.show
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
