@@ -31,5 +31,13 @@ public class Application extends Controller {
         Post post = Post.findById(id);
         render(post);
     }
+
+
+    // uses previous addComment() method
+    public static void postComment(Long postId, String author, String content) {
+        Post post = Post.findById(postId);
+        post.addComment(author, content);
+        show(postId);
+    }
  
 }
