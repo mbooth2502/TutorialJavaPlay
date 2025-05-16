@@ -13,6 +13,9 @@ GET     /posts/{id}                             Application.show
 # Comment post
 POST    /posts/{postId}/comments                Application.postComment
 
+# Generate captcha image
+GET     /captcha                                Application.captcha
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

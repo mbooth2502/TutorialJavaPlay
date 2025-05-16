@@ -6,7 +6,8 @@ import play.*;
 import play.mvc.*;
 import play.Play;
 import play.data.validation.*;
- 
+import play.libs.*; 
+
 import models.*;
  
 public class Application extends Controller {
@@ -46,6 +47,13 @@ public class Application extends Controller {
         post.addComment(author, content);
         flash.success("Thanks for posting %s", author);
         show(postId);
+    }
+
+
+    // Captcha Image production
+    public static void captcha() {
+        Images.Captcha captcha = Images.captcha();
+        renderBinary(captcha);
     }
  
 }
