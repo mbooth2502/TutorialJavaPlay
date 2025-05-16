@@ -10,6 +10,9 @@ GET     /                                       Application.index
 # Display page
 GET     /posts/{id}                             Application.show
 
+# Comment post
+POST    /posts/{postId}/comments                Application.postComment
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

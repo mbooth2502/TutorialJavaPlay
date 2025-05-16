@@ -5,6 +5,7 @@ import java.util.*;
 import play.*;
 import play.mvc.*;
 import play.Play;
+import play.data.validation.*;
  
 import models.*;
  
@@ -15,7 +16,8 @@ public class Application extends Controller {
         renderArgs.put("blogTitle", Play.configuration.getProperty("blog.title"));
         renderArgs.put("blogBaseline", Play.configuration.getProperty("blog.baseline"));
     }
- 
+
+    
     public static void index() {
         Post frontPost = Post.find("order by postedAt desc").first();
         List<Post> olderPosts = Post.find(
@@ -34,9 +36,15 @@ public class Application extends Controller {
 
 
     // uses previous addComment() method
-    public static void postComment(Long postId, String author, String content) {
+    // validate fields aren't passed as empty using play validation mechanism - @Required
+    // Use Flash for success message - flash passes messages from one action to next
+    public static void postComment(Long postId, @Required String author, @Required String content) {
         Post post = Post.findById(postId);
+        if(validation.hasErrors()) {
+            render("Application/show.html", post);
+        }
         post.addComment(author, content);
+        flash.success("Thanks for posting %s", author);
         show(postId);
     }
  
