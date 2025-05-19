@@ -1,7 +1,9 @@
 package controllers;
  
 import java.util.*;
- 
+
+import org.omg.IOP.Codec;
+
 import play.*;
 import play.mvc.*;
 import play.Play;
@@ -29,24 +31,38 @@ public class Application extends Controller {
     }
 
 
-    // Method to display pos details page
+    // Method to display post details page
     // id to be extracted from from query string, from URL path, or from request body 
+    // unique ID created every time comment shown
     public static void show(Long id) {
         Post post = Post.findById(id);
-        render(post);
+        String randomID = java.util.UUID.randomUUID().toString();
+        render(post, randomID);
     }
 
 
     // uses previous addComment() method
     // validate fields aren't passed as empty using play validation mechanism - @Required
     // Use Flash for success message - flash passes messages from one action to next
-    public static void postComment(Long postId, @Required String author, @Required String content) {
+
+    // Validation of Captcha - Retrieve randomID, retrieve actual code from cache and compare against submitted one
+    public static void postComment(
+            Long postId, 
+            @Required(message="Author is required") String author, 
+            @Required(message="A message is required") String content, 
+            @Required(message="Please type the code") String code, 
+            String randomID) 
+    {
         Post post = Post.findById(postId);
+        validation.equals(
+            code, Cache.get(randomID)
+        ).message("Invalid code. Please type it again");
         if(validation.hasErrors()) {
-            render("Application/show.html", post);
+            render("Application/show.html", post, randomID);
         }
         post.addComment(author, content);
         flash.success("Thanks for posting %s", author);
+        Cache.delete(randomID);
         show(postId);
     }
 
