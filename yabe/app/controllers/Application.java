@@ -76,5 +76,18 @@ public class Application extends Controller {
         Cache.set(id, code, "10mn");
         renderBinary(captcha);
     }
+
+
+    // Called by tags when clicked on 
+    public static void listTagged(String tag) {
+        List<Post> posts = Post.findTaggedWith(tag);
+        render(tag, posts);
+    }
+
+
+    // Show an author's profile
+    public static void showAuthorProfile (String author) {
+        render(author);
+    }
  
 }

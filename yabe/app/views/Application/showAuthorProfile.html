@@ -1,0 +1,12 @@
+#{extends 'main.html' /}  <!-- if you use a main layout -->
+
+<h1>Profile of @author</h1>
+
+<div class="author-profile">
+    <img src="/public/images/authorPPic.png" alt="Photo of ${author}" style="max-width:150px; height:auto;">
+    <p>Name: ${author}</p>
+    <!-- Add more author details here, e.g. bio, avatar, posts, etc -->
+    <p>More info about the author will be displayed here.</p>
+</div>
+
+<a href="@{Application.index()}">Back to home</a>

@@ -168,4 +168,51 @@ public class BasicTest extends UnitTest {
         assertEquals(4, Comment.count());
     }
 
+
+    // Test adding tags and use findTaggedWith method to check assignment
+    @Test
+    public void testTags() {
+        // Create a new user and save it
+        User bob = new User("bob@gmail.com", "secret", "Bob").save();
+    
+        // Create a new post
+        Post bobPost = new Post(bob, "My first post", "Hello world").save();
+        Post anotherBobPost = new Post(bob, "Hop", "Hello world").save();
+        
+        // Well
+        assertEquals(0, Post.findTaggedWith("Red").size());
+        
+        // Tag it now
+        bobPost.tagItWith("Red").tagItWith("Blue").save();
+        anotherBobPost.tagItWith("Red").tagItWith("Green").save();
+        
+        // Check
+        assertEquals(2, Post.findTaggedWith("Red").size());        
+        assertEquals(1, Post.findTaggedWith("Blue").size());
+        assertEquals(1, Post.findTaggedWith("Green").size());
+        
+        // More complex signatures
+        assertEquals(1, Post.findTaggedWith("Red", "Blue").size());   
+        assertEquals(1, Post.findTaggedWith("Red", "Green").size());   
+        assertEquals(0, Post.findTaggedWith("Red", "Green", "Blue").size());  
+        assertEquals(0, Post.findTaggedWith("Green", "Blue").size());
+
+        // Test Tag Cloud
+       List<Map> cloud = Tag.getCloud();
+
+        assertEquals(3, cloud.size());
+
+        Map tag1 = cloud.get(0);
+        assertEquals("Blue", tag1.get("tag"));
+        assertEquals(1L, tag1.get("pound"));
+
+        Map tag2 = cloud.get(1);
+        assertEquals("Green", tag2.get("tag"));
+        assertEquals(1L, tag2.get("pound"));
+
+        Map tag3 = cloud.get(2);
+        assertEquals("Red", tag3.get("tag"));
+        assertEquals(2L, tag3.get("pound"));
+    }
+
 }

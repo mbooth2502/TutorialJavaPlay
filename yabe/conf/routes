@@ -9,13 +9,17 @@
 GET     /                                       Application.index
 
 # Display page
-GET     /posts/{id}                             Application.show
+# URL restricted to numeric values only for id - solves conflications with /posts/{tag}
+GET     /posts/{<[0-9]+>id}             Application.show
 
 # Comment post
 POST    /posts/{postId}/comments                Application.postComment
 
 # Generate captcha image
 GET     /captcha                                Application.captcha
+
+# List blog posts by tag
+GET     /posts/{tag}                    Application.listTagged
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
