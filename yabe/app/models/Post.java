@@ -44,7 +44,8 @@ public class Post extends Model {
         this.save();
         return this;
     }
-    
+
+
 
     // Adding Pagination - easy navigation through posts
     public Post previous() {
@@ -70,5 +71,7 @@ public class Post extends Model {
             "p.content, p.postedAt having count(t.id) = :size"
         ).bind("tags", tags).bind("size", tags.length).fetch();
     }
+
+
     
 }

@@ -85,9 +85,11 @@ public class Application extends Controller {
     }
 
 
-    // Show an author's profile
-    public static void showAuthorProfile (String author) {
-        render(author);
+    public static void showAuthorProfile(String authorFullname) {
+        render();
     }
+
+
+
  
 }
